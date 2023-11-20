@@ -72,7 +72,6 @@ def calculate_required_fuel(item_masses_list):
         # redefine each mass as original
         fuel = (math.floor(mass / 3) - 2)
         fuel_list.append(fuel)
-        print(fuel_list)
     # Returns the sum of all items in the new list, following the calculations
 
     
@@ -96,12 +95,26 @@ process, continuing until a fuel requirement is zero or negative.
     for fuel in fuel_list:
         fuel_for_fuel = (math.floor(fuel / 3) - 2)
         fuel_for_fuel_list.append(fuel_for_fuel)
-        print(fuel_for_fuel_list)
     
-    total_fuel_required = sum(fuel_list) + sum(fuel_for_fuel_list)
+        # additional_fuel_list = []  
+        # if fuel_for_fuel >= 12:
+        #     additional_fuel = (math.floor(fuel_for_fuel / 3) - 2)
+        #     additional_fuel_list.append(additional_fuel)
+                
+        #     if additional_fuel >= 0:
+        #         additional_fuel = (math.floor(additional_fuel / 3) - 2)
+        #         additional_fuel_list.append(additional_fuel)
+            
+
+    total_fuel_required = sum(fuel_list) 
+    + sum(fuel_for_fuel_list)
+    #+ sum(additional_fuel_list)
 
     return total_fuel_required
 
 
 
-calculate_required_fuel(range(9,52))
+calculate_required_fuel(item_masses_list)
+
+
+# Answer to go in https://adventofcode.com/2019/day/1#part2
