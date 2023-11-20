@@ -67,12 +67,41 @@ def calculate_required_fuel(item_masses_list):
         each individual items' mass.
     """
     # Perform calculation on every item in the list of masses
-    updated_masses_list = []
+    fuel_list = []
     for mass in item_masses_list:
         # redefine each mass as original
-        updated_mass = (math.floor(mass / 3) - 2)
-        updated_masses_list.append(updated_mass)
+        fuel = (math.floor(mass / 3) - 2)
+        fuel_list.append(fuel)
+        print(fuel_list)
     # Returns the sum of all items in the new list, following the calculations
-    return sum(updated_masses_list)
 
-calculate_required_fuel(item_masses_list)
+    
+    """ Part 2
+Apparently, you forgot to include additional fuel for the fuel you just added.
+
+Fuel itself requires fuel just like a module - take its mass, divide by three, 
+round down, and subtract 2. However, that fuel also requires fuel, and that 
+fuel requires fuel, and so on. Any mass that would require negative fuel should
+instead be treated as if it requires zero fuel; the remaining mass, if any, 
+is instead handled by wishing really hard, which has no mass and is outside the
+scope of this calculation.
+
+So, for each module mass, calculate its fuel and add it to the total. Then, 
+treat the fuel amount you just calculated as the input mass and repeat the 
+process, continuing until a fuel requirement is zero or negative.
+
+"""
+    # Calculate fuel necessary for fuel
+    fuel_for_fuel_list = []
+    for fuel in fuel_list:
+        fuel_for_fuel = (math.floor(fuel / 3) - 2)
+        fuel_for_fuel_list.append(fuel_for_fuel)
+        print(fuel_for_fuel_list)
+    
+    total_fuel_required = sum(fuel_list) + sum(fuel_for_fuel_list)
+
+    return total_fuel_required
+
+
+
+calculate_required_fuel(range(9,52))
