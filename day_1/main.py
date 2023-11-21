@@ -7,18 +7,6 @@ Fuel required to launch a given module is based on its mass. Specifically, to
 find the fuel required for a module, take its mass, divide by three, round 
 down, and subtract 2.
 
-For example:
-
-For a mass of 12, divide by 3 and round down to get 4, then subtract 2 to get 
-2.
-For a mass of 14, dividing by 3 and rounding down still yields 4, so the fuel 
-required is also 2.
-For a mass of 1969, the fuel required is 654.
-For a mass of 100756, the fuel required is 33583.
-The Fuel Counter-Upper needs to know the total fuel requirement. To find it, 
-individually calculate the fuel needed for the mass of each module (your puzzle
-input), then add together all the fuel values.
-
 What is the sum of the fuel requirements for all of the modules on your 
 spacecraft?
 
@@ -46,7 +34,6 @@ item_masses_df.head()
 # Converts the first column in the dataframe to a list
 item_masses_list = item_masses_df.iloc[:, 0].tolist()
 
-
 def calculate_required_fuel(item_masses_list):
     """
     Takes a series of integers (masses of items) and calculates the fuel
@@ -69,16 +56,14 @@ def calculate_required_fuel(item_masses_list):
     # Perform calculation on every item in the list of masses
     fuel_list = []
     for mass in item_masses_list:
-        # redefine each mass as original
+        # Follow calculates to determine fuel needed for each item
         fuel = (math.floor(mass / 3) - 2)
+        # Appends the fuel required to the new list
         fuel_list.append(fuel)
-    # Returns the sum of all items in the new list, following the calculations
 
-    
-    """ Part 2
-Apparently, you forgot to include additional fuel for the fuel you just added.
+    return sum(fuel_list)
 
-Fuel itself requires fuel just like a module - take its mass, divide by three, 
+"""Fuel itself requires fuel just like a module - take its mass, divide by three, 
 round down, and subtract 2. However, that fuel also requires fuel, and that 
 fuel requires fuel, and so on. Any mass that would require negative fuel should
 instead be treated as if it requires zero fuel; the remaining mass, if any, 
@@ -87,34 +72,57 @@ scope of this calculation.
 
 So, for each module mass, calculate its fuel and add it to the total. Then, 
 treat the fuel amount you just calculated as the input mass and repeat the 
-process, continuing until a fuel requirement is zero or negative.
-
-"""
-    # Calculate fuel necessary for fuel
-    fuel_for_fuel_list = []
-    for fuel in fuel_list:
-        fuel_for_fuel = (math.floor(fuel / 3) - 2)
-        fuel_for_fuel_list.append(fuel_for_fuel)
+process, continuing until a fuel requirement is zero or negative."""
     
-        # additional_fuel_list = []  
-        # if fuel_for_fuel >= 12:
-        #     additional_fuel = (math.floor(fuel_for_fuel / 3) - 2)
-        #     additional_fuel_list.append(additional_fuel)
+def calculate_fuel_for_fuel(item_masses_list):
+    """_summary_
+
+    Parameters
+    ----------
+    item_masses_list : list
+        This is an imported .txt file of integers representing the masses of
+        items, converted into a list.
+
+    Returns
+    -------
+    sum(fuel_list): integer
+        _description_
+    """
+    
+    fuel_list = []
+    for mass in item_masses_list:
+        # Sets a list for an empty fuel total
+        running_fuel_total = []
+        # Set the mass to start
+        last_mass = mass
+        # Sets a default boolean value for requiring more fuel
+        requires_more_fuel = True
+        
+        # While more fuel required, perform calculations on the fuel
+        while requires_more_fuel == True:
+            fuel = (math.floor(last_mass / 3) - 2)
+           
+           # if the fuel is below zero, no more fuel required for the item
+            if fuel < 0:
+                # Break the loop for the item
+                requires_more_fuel = False
+            # If fuel required is one or more, append it onto the running total 
+            else:
+                running_fuel_total.append(fuel)
+                # Set the new last mass to be the fuel, to loop through
+                last_mass = fuel
+        # redefine each mass as original
+        
+        fuel_list.append(sum(running_fuel_total))
+        
                 
-        #     if additional_fuel >= 0:
-        #         additional_fuel = (math.floor(additional_fuel / 3) - 2)
-        #         additional_fuel_list.append(additional_fuel)
-            
-
-    total_fuel_required = sum(fuel_list) 
-    + sum(fuel_for_fuel_list)
-    #+ sum(additional_fuel_list)
-
-    return total_fuel_required
+    return sum(fuel_list)
 
 
+# Run the first function and print the result
+print(f"The amount of fuel needed to transport the items is:",
+    calculate_required_fuel(item_masses_list))
 
-calculate_required_fuel(item_masses_list)
-
-
-# Answer to go in https://adventofcode.com/2019/day/1#part2
+# Run the second function and print the result
+print(f"The total amount of fuel required is:",
+    calculate_fuel_for_fuel(item_masses_list))
