@@ -16,74 +16,126 @@ WIRE_1 = lines[0].split(",")
 WIRE_2 = lines[1].split(",")
 
 # %%
-# Check lines allocated without error
-print(WIRE_1)
-print(WIRE_2)
+def wire_journeys():
+    """Plots the path of each wire, step by step
 
-#%%
-# Confirm WIRE_1 steps stored as a list
-type(WIRE_1)
-
-# %%
-# Use first character in each step to identify the direction of the step
-for step in range (len(WIRE_1)):
-    direction = WIRE_1[step] [0]
-    # Check this by printing the direction
-    print(direction)
-
-
-# %%
-def wire_1_journey():
+    Returns
+    -------
+    Wirepath_1: List of tuples
+        This is the step-by-step route of the first wire based on directions
+        provided (e.g., U23 is up 23 steps, L12 is left 12 steps). The tuples
+        are the step-by-step movements.
+    
+    Wirepath_2: List of tuples
+        This is the step-by-step route of the second wire based on directions
+        provided. The tuples are the step-by-step movements.
+    """
+    # Set wire 1 x and y axes to 0, set the starting point of the path as 0,0
     wire_1_x_axis = 0
-    wire_1_y_axes = 0
+    wire_1_y_axis = 0
+    wire_1_path=[(0,0)]
+    
+    # Set wire 2 x and y axes to 0, set the starting point of the path as 0,0
+    wire_2_x_axis = 0
+    wire_2_y_axis = 0
+    wire_2_path=[(0,0)]
 
+    # Calculate individual steps for wire 1
     for step in WIRE_1:
-        if direction == "R":
-            #print(int(step[1:]))
-            wire_1_x_axis = wire_1_x_axis + int(step[1:])
-        elif direction == "L": 
-            print(int(step[1:]))
-            wire_1_x_axis = wire_1_x_axis - int(step[1:]) 
-        elif direction == "U":
-            print(int(step[1:]))
-            wire_1_y_axes = wire_1_y_axes + int(step[1:])
-        elif direction == "D":
-            print(int(step[1:]))
-            wire_1_y_axes = wire_1_y_axes - int(step[1:])
-
-# this isn't working the numbers only go down WHY BETH
-
-   # return (wire_1_x_axis, wire_1_y_axes)
+        if step[0] == "R": 
+            """Identify using the input (index position removes the character
+            at the beginning) and calculates points in the path for each 
+            individual step in the set direction by adding on to the 0 x/y 
+            axes starting point. Appends the step onto a list that contains 
+            the full wire path. Range starts at 1 to avoid an entry where the
+            path is stationary"""
+            for wire_step in range(1, int(step[1:])+1):
+                path_point = (wire_1_x_axis + wire_step,wire_1_y_axis) 
+                wire_1_path.append(path_point)
+            wire_1_x_axis += wire_step
+        elif step[0]== "L": 
+            for wire_step in range(1, int(step[1:])+1):
+                # For movement to the left, calculated as 0 - number of steps
+                path_point = (wire_1_x_axis - wire_step,wire_1_y_axis) 
+                wire_1_path.append(path_point)
+            wire_1_x_axis -= wire_step
+        elif step[0] == "U":
+            for wire_step in range(1, int(step[1:])+1):
+                path_point = (wire_1_x_axis, wire_1_y_axis + wire_step) 
+                wire_1_path.append(path_point)
+            wire_1_y_axis += wire_step
+        elif step[0] == "D":
+            # For movement downward, calculated as 0 - number of steps
+            for wire_step in range(1, int(step[1:])+1):
+                path_point = (wire_1_x_axis, wire_1_y_axis - wire_step) 
+                wire_1_path.append(path_point)
+            wire_1_y_axis -= wire_step
             
-# %%
-wire_1_journey()
+
+    for step in WIRE_2:
+        """Identify using the input (index position removes the character
+            at the beginning) and calculates points in the path for each 
+            individual step in the set direction by adding on to the 0 x/y 
+            axes starting point. Appends the step onto a list that contains 
+            the full wire pathRange starts at 1 to avoid an entry where the
+            path is stationary"""
+        if step[0] == "R":
+            for wire_step in range(1, int(step[1:])+1):
+                path_point = (wire_2_x_axis + wire_step,wire_2_y_axis) 
+                wire_2_path.append(path_point)
+            wire_2_x_axis += wire_step
+        elif step[0]== "L": 
+            # For movement to the left, calculated as 0 - number of steps
+            for wire_step in range(1, int(step[1:])+1):
+                path_point = (wire_2_x_axis - wire_step,wire_2_y_axis) 
+                wire_2_path.append(path_point)
+            wire_2_x_axis -= wire_step
+        elif step[0] == "U":
+            for wire_step in range(1, int(step[1:])+1):
+                path_point = (wire_2_x_axis, wire_2_y_axis + wire_step) 
+                wire_2_path.append(path_point)
+            wire_2_y_axis += wire_step
+        elif step[0] == "D":
+            # For movement downward, calculated as 0 - number of steps
+            for wire_step in range(1, int(step[1:])+1):
+                path_point = (wire_2_x_axis, wire_2_y_axis - wire_step) 
+                wire_2_path.append(path_point)
+            wire_2_y_axis -= wire_step
+    
+    # Returns the list of tuples for each wire journey as function output        
+    return wire_1_path, wire_2_path
+
 
 # %%
+# Call the function
+wire_journeys()
 
-# for wire 1, 
-# if instruction begins with R, add number to first number and print first 
-#  number,if instruction begins with L, minus the number from the 
-# second number and print it 
-# if instruction begins with U, add number to second number, print 
-# second number, if instruction begins with D, minus the number from the 
-# second number and print it 
+#wire_1, wire_2 = wire_journeys()
 
-# This should lead to a printed path of where it;s been
+# %%
+def closest_shared_point():
+    """_summary_
+    """
+    # Use the outputs of the wire_journeys() function as inputs for this one
+    wire_1_path, wire_2_path = wire_journeys()
+    # Generate list of shared set points by using set for the two lists of 
+    # tuples to identify points that appear in both
+    shared_points = set.intersection(set(wire_1_path), set(wire_2_path))
+    # Print the shared points for both wires
+    print(shared_points)
+    
+    
+    ################### this isn't fixed
+    for point in shared_points:
+        distance_to_centre = sum(abs(point[0:1]))
+        print(distance_to_centre)
 
+# %%
+closest_shared_point()
+# %%
 
-# for wire 2, 
-# if instruction begins with R, add number to first number and print first 
-#  number,if instruction begins with L, minus the number from the 
-# second number and print it 
-# if instruction begins with U, add number to second number, print 
-# second number, if instruction begins with D, minus the number from the 
-# second number and print it 
-
-# This should lead to a printed path of where it;s been
-
-# consider .intersections method
 # there is a python manhattan method 
-# https://www.statology.org/manhattan-distance-python/
+# 
 
 
 
