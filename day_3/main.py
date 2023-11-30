@@ -5,7 +5,7 @@ Resources used: https://www.w3schools.com/python/ref_file_readlines.asp
 import pandas as pd
 
 # Set input datapath
-DATAPATH = "day_3/input.txt"
+DATAPATH = "h_input.txt"
 
 # Read each individual line of the txt file as a list
 with open(DATAPATH) as f:
@@ -15,7 +15,7 @@ with open(DATAPATH) as f:
 WIRE_1 = lines[0].split(",")
 WIRE_2 = lines[1].split(",")
 
-def wire_journeys():
+def wire_journeys(WIRE_1, WIRE_2):
     """Plots the path of each wire, step by step
 
     Returns
@@ -29,6 +29,7 @@ def wire_journeys():
         This is the step-by-step route of the second wire based on directions
         provided. The tuples are the step-by-step movements.
     """
+
     # Set wire 1 x and y axes to 0, set the starting point of the path as 0,0
     wire_1_x_axis = 0
     wire_1_y_axis = 0
@@ -106,7 +107,7 @@ def wire_journeys():
 
 
 # Call the function
-wire_journeys()
+wire_journeys(WIRE_1, WIRE_2)
 
 
 def closest_shared_point():
@@ -116,7 +117,7 @@ def closest_shared_point():
     """
     
     # Use the outputs of the wire_journeys() function as inputs
-    wire_1_path, wire_2_path = wire_journeys()
+    wire_1_path, wire_2_path = wire_journeys(WIRE_1, WIRE_2)
     
     # Generate list of shared set points by using set for both lists of points
     shared_points = set.intersection(set(wire_1_path), set(wire_2_path))

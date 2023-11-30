@@ -14,13 +14,12 @@ with open(DATAPATH) as f:
 
 # Set the wires to correspond with txt file lines    
 WIRE_1 = lines[0].split(",")
-WIRE_2 = lines[1].split(",")
+WIRE_2 = lines[2].split(",")
 
 def test_wire_journeys():
     wire_1_path, wire_2_path = wire_journeys()
     result = wire_journeys()
     # check that result starts at 0,0
-    
     assert (0,0) in result[0]
     
     assert (1,0) in wire_1_path
