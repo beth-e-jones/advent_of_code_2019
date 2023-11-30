@@ -1,26 +1,20 @@
-# %%
 """
 Resources used: https://www.w3schools.com/python/ref_file_readlines.asp
 """
 
-# %%
 import pandas as pd
 
-# %%
 # Set input datapath
-DATAPATH = "input.txt"
+DATAPATH = "day_3/input.txt"
 
-# %%
 # Read each individual line of the txt file as a list
 with open(DATAPATH) as f:
     lines = f.readlines()
 
-# %%
 # Set the wires to correspond with txt file lines    
 WIRE_1 = lines[0].split(",")
 WIRE_2 = lines[1].split(",")
 
-# %%
 def wire_journeys():
     """Plots the path of each wire, step by step
 
@@ -111,13 +105,10 @@ def wire_journeys():
     return wire_1_path, wire_2_path
 
 
-# %%
 # Call the function
 wire_journeys()
 
-#wire_1, wire_2 = wire_journeys()
 
-# %%
 def closest_shared_point():
     """Uses the two wire paths to identify where the wires intersect and 
     creates a list of points where the wires intersect. Then calculates the 
@@ -152,11 +143,15 @@ def closest_shared_point():
         {min_abs_distance}
     )
     
-
-# %%
+    return shared_points, min_abs_distance
 
 closest_shared_point()
-# %%
+
+#"""Part 2 - fewest combined steps to reach an intersection"""
 
 
-# %%
+#def fewest_combined_steps():
+      
+    # Use the outputs of the wire_journeys() function as inputs
+    #wire_1_path, wire_2_path = wire_journeys()
+    #list_shared_points = closest_shared_point()
