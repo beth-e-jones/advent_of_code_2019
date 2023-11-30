@@ -1,4 +1,9 @@
 # %%
+"""
+Resources used: https://www.w3schools.com/python/ref_file_readlines.asp
+"""
+
+# %%
 import pandas as pd
 
 # %%
@@ -114,32 +119,44 @@ wire_journeys()
 
 # %%
 def closest_shared_point():
-    """_summary_
+    """Uses the two wire paths to identify where the wires intersect and 
+    creates a list of points where the wires intersect. Then calculates the 
+    Manhattan distance of all points and prints the lowest Manhattan distance.
     """
-    # Use the outputs of the wire_journeys() function as inputs for this one
+    
+    # Use the outputs of the wire_journeys() function as inputs
     wire_1_path, wire_2_path = wire_journeys()
-    # Generate list of shared set points by using set for the two lists of 
-    # tuples to identify points that appear in both
+    
+    # Generate list of shared set points by using set for both lists of points
     shared_points = set.intersection(set(wire_1_path), set(wire_2_path))
-    # Print the shared points for both wires
-    print(shared_points)
     
+    #Create empty list of absolute distances
+    list_absolute_distances = []
     
-    ################### this isn't fixed
+    # Calculate absolute value of the x and y axes for each point and sum them
     for point in shared_points:
-        distance_to_centre = sum(abs(point[0:1]))
-        print(distance_to_centre)
+        # Calculate Manhattan distances by summing the absolute values for x/y
+        # axes for each point
+        abs_distance = (abs(point[0]) + abs(point[1]))
+        if abs_distance > 0:
+        # Append the absolute distance for each point to the list of distances
+            list_absolute_distances.append(abs_distance)
+    
+    # Identify lowest value from the list of absolute distances for each point
+    min_abs_distance = min(list_absolute_distances)
+    list_absolute_distances.sort
+    
+    # Print the dlosest intersection
+    print(
+        f"The closest intersection to the the central point is:", 
+        {min_abs_distance}
+    )
+    
 
 # %%
+
 closest_shared_point()
 # %%
 
-# there is a python manhattan method 
-# 
 
-
-
-""""
-https://www.w3schools.com/python/ref_file_readlines.asp
-"""
 # %%
